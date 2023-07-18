@@ -16,13 +16,8 @@ import { HamburgerIcon } from '@chakra-ui/icons';
 import UserProfile from './UserProfile';
 import CustomLink from '../elements/Link';
 
-// Array of link data
-const links = [
-  { title: 'Shops', url: '#' },
-  { title: 'Booking', url: '#' },
-  { title: 'Orders', url: '#' },
-  { title: 'History', url: '#' },
-];
+// routes
+import routes from './routes';
 
 const Sidebar: React.FC = () => {
   const { isOpen, onToggle, onClose } = useDisclosure();
@@ -76,7 +71,7 @@ const Sidebar: React.FC = () => {
           <UserProfile />
           <Divider />
           <VStack alignItems="flex-start">
-            {links.map((link) => (
+            {routes.map((link) => (
               <CustomLink
                 letterSpacing="0.1rem"
                 key={link.title}
@@ -108,7 +103,7 @@ const Sidebar: React.FC = () => {
               <UserProfile />
               <Divider />
               <VStack alignItems="flex-start">
-                {links.map((link) => (
+                {routes.map((link) => (
                   <CustomLink
                     letterSpacing="0.1rem"
                     key={link.title}
