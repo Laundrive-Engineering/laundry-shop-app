@@ -13,12 +13,12 @@ import { FaEdit, FaTrash } from 'react-icons/fa';
 import { ShopData } from '@/components/modules/interface';
 
 type Props = {
-  headers: string[],
-  data: ShopData[],
+  headers: string[];
+  data: ShopData[];
   // eslint-disable-next-line no-unused-vars
-  handleEdit?: (data: ShopData) => void,
+  handleEdit?: (data: ShopData) => void;
   // eslint-disable-next-line no-unused-vars
-  handleDelete?: (data: ShopData) => void,
+  handleDelete?: (data: ShopData) => void;
 };
 
 const CustomTable: React.FC<Props> = ({
