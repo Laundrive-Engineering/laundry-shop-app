@@ -1,7 +1,7 @@
-import Bookings from "@/components/modules/shop/Bookings";
+import Bookings from '@/components/modules/shop/Bookings';
 
 const BookingsList = () => {
-    return <Bookings/>;
+  return <Bookings />;
 };
 
 export default BookingsList;

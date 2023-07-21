@@ -1,121 +1,67 @@
 import React from 'react';
 import {
-    Table,
-    Thead,
-    Tbody,
-    Tr,
-    Th,
-    Td,
-    TableContainer,
+  Table,
+  TableContainer,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
 } from '@chakra-ui/react';
-import {FaEdit, FaTrash} from 'react-icons/fa';
+import { FaEdit, FaTrash } from 'react-icons/fa';
 
-import {BaseData, BookingData, ShopData} from '@/components/modules/interface';
-import Any = jasmine.Any;
-import {JSXElement} from "@babel/types";
-
-type Props = {
-    headers: string[];
-    data: ShopData[];
-    // eslint-disable-next-line no-unused-vars
-    handleEdit?: (data: ShopData) => void;
-    // eslint-disable-next-line no-unused-vars
-    handleDelete?: (data: ShopData) => void;
-};
+import { BaseTableData } from '@/components/modules/interface';
 
 type DataTableProps = {
-    headers: string[];
-    values: BaseData[];
-    onEditRow?: (rowData: BaseData) => JSX.Element;
-    onDeleteRow?: (rowData: BaseData) => JSX.Element;
-}
-
-const DataTable: React.FC<DataTableProps> = ({
-                                                 headers,
-                                                 values,
-                                                 onEditRow,
-                                                 onDeleteRow
-                                             }) => {
-    return (
-        <TableContainer bg="white" borderRadius={5} padding={5} overflowX="auto">
-            <Table variant="simple" colorScheme="white">
-                <Thead>
-                    <Tr>
-                        {headers.map((header, index) => <Th key={index}>{header}</Th>)}
-                    </Tr>
-                </Thead>
-                <Tbody>
-                    {values.map((rowData) => <Tr key={rowData.id}>
-                        {
-                            Object.entries(rowData).map(([key, value], index) => {
-                                return key !== 'id' ? <Td key={index}>{value}</Td> : null
-                            })
-                        }
-                        <Td display="flex" justifyContent="space-between">
-                            <div>
-                                {onEditRow && <button onClick={() => onEditRow(rowData)}>
-                                    <FaEdit/>
-                                </button>}
-                                {onEditRow && onDeleteRow && <p>|</p>}
-                                {onDeleteRow && <button onClick={() => onDeleteRow(rowData)}>
-                                    <FaTrash/>
-                                </button>}
-                            </div>
-                        </Td>
-                    </Tr>)}
-                </Tbody>
-            </Table>
-        </TableContainer>
-    );
+  headers: string[],
+  values: BaseTableData[],
+  onEditRow?: (rowData: BaseTableData) => JSX.Element,
+  onDeleteRow?: (rowData: BaseTableData) => JSX.Element,
 };
 
-
-// Deprecated
-const CustomTable: React.FC<Props> = ({
-                                          headers,
-                                          data,
-                                          handleEdit,
-                                          handleDelete,
-                                      }) => {
-    return (
-        <TableContainer bg="white" borderRadius={5} padding={5} overflowX="auto">
-            <Table variant="simple" colorScheme="white">
-                <Thead>
-                    <Tr>
-                        {headers.map((header, index) => (
-                            <Th key={index}>{header}</Th>
-                        ))}
-                    </Tr>
-                </Thead>
-                <Tbody>
-                    {data.map((row) => (
-                        <Tr key={row.id}>
-                            {Object.entries(row).map(([key, value], index) => {
-                                if (key !== 'id') {
-                                    return <Td key={index}>{value}</Td>;
-                                }
-                                return null;
-                            })}
-
-                            <Td display="flex" justifyContent="space-between">
-                                {handleEdit && (
-                                    <button onClick={() => handleEdit(row)}>
-                                        <FaEdit/>
-                                    </button>
-                                )}
-                                |
-                                {handleDelete && (
-                                    <button onClick={() => handleDelete(row)}>
-                                        <FaTrash/>
-                                    </button>
-                                )}
-                            </Td>
-                        </Tr>
-                    ))}
-                </Tbody>
-            </Table>
-        </TableContainer>
-    );
+const DataTable: React.FC<DataTableProps> = ({
+  headers,
+  values,
+  onEditRow,
+  onDeleteRow,
+}) => {
+  return (
+    <TableContainer bg="white" borderRadius={5} padding={5} overflowX="auto">
+      <Table variant="simple" colorScheme="white">
+        <Thead>
+          <Tr>
+            {headers.map((header, index) => (
+              <Th key={index}>{header}</Th>
+            ))}
+          </Tr>
+        </Thead>
+        <Tbody>
+          {values.map((rowData) => (
+            <Tr key={rowData.id}>
+              {Object.entries(rowData).map(([key, value], index) => {
+                return key !== 'id' ? <Td key={index}>{value}</Td> : null;
+              })}
+              <Td display="flex" justifyContent="space-between">
+                <div>
+                  {onEditRow && (
+                    <button onClick={() => onEditRow(rowData)}>
+                      <FaEdit />
+                    </button>
+                  )}
+                  {onEditRow && onDeleteRow && <p>|</p>}
+                  {onDeleteRow && (
+                    <button onClick={() => onDeleteRow(rowData)}>
+                      <FaTrash />
+                    </button>
+                  )}
+                </div>
+              </Td>
+            </Tr>
+          ))}
+        </Tbody>
+      </Table>
+    </TableContainer>
+  );
 };
 
 export default DataTable;
