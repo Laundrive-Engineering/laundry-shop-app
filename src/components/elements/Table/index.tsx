@@ -1,17 +1,5 @@
 import React from 'react';
-import {
-  HStack,
-  IconButton,
-  Table,
-  TableContainer,
-  Tbody,
-  Td,
-  Th,
-  Thead,
-  Tr
-} from '@chakra-ui/react';
-
-import { FaEdit, FaTrash } from 'react-icons/fa';
+import { HStack, IconButton, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 
 import { BaseTableData } from '@/components/modules/interface';
 import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
@@ -31,7 +19,7 @@ const DataTable: React.FC<DataTableProps> = ({
 }) => {
   return (
     <TableContainer bg="white" borderRadius={5} padding={5} overflowX="auto">
-      <Table variant="simple" colorScheme="blue" size={"lg"} layout={"string"}>
+      <Table variant="simple" colorScheme="blue" size={'lg'} layout={'string'}>
         <Thead>
           <Tr>
             {headers.map((header, index) => (
@@ -46,14 +34,19 @@ const DataTable: React.FC<DataTableProps> = ({
                 return key !== 'id' ? <Td key={index}>{value}</Td> : null;
               })}
               <Td display="flex" justifyContent="space-between">
-                {(onEditRowHandler || onDeleteRowHandler) && (<HStack>
-                  {onEditRowHandler && (
-                    <IconButton aria-label='Edit row' icon={<EditIcon />} />
-                  )}
-                  {onDeleteRowHandler && (
-                    <IconButton aria-label='Delete row' icon={<DeleteIcon />} />
-                  )}
-                </HStack>)}
+                {(onEditRowHandler || onDeleteRowHandler) && (
+                  <HStack>
+                    {onEditRowHandler && (
+                      <IconButton aria-label="Edit row" icon={<EditIcon />} />
+                    )}
+                    {onDeleteRowHandler && (
+                      <IconButton
+                        aria-label="Delete row"
+                        icon={<DeleteIcon />}
+                      />
+                    )}
+                  </HStack>
+                )}
               </Td>
             </Tr>
           ))}

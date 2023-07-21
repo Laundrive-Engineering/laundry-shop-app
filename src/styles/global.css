@@ -40,6 +40,6 @@ a:hover {
 }
 
 /* For empty cells */
-td:empty::after{
-  content: "\00a0";
+td:empty::after {
+  content: '\00a0';
 }
