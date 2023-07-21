@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  HStack,
   IconButton,
   Table,
   TableContainer,
@@ -30,7 +31,7 @@ const DataTable: React.FC<DataTableProps> = ({
 }) => {
   return (
     <TableContainer bg="white" borderRadius={5} padding={5} overflowX="auto">
-      <Table variant="striped" colorScheme="blue" size={"lg"} layout={"string"}>
+      <Table variant="simple" colorScheme="blue" size={"lg"} layout={"string"}>
         <Thead>
           <Tr>
             {headers.map((header, index) => (
@@ -45,16 +46,14 @@ const DataTable: React.FC<DataTableProps> = ({
                 return key !== 'id' ? <Td key={index}>{value}</Td> : null;
               })}
               <Td display="flex" justifyContent="space-between">
-                <div>
-                  &nbsp;
+                {(onEditRowHandler || onDeleteRowHandler) && (<HStack>
                   {onEditRowHandler && (
                     <IconButton aria-label='Edit row' icon={<EditIcon />} />
                   )}
-                  {onEditRowHandler && onDeleteRowHandler && <p>|</p>}
                   {onDeleteRowHandler && (
                     <IconButton aria-label='Delete row' icon={<DeleteIcon />} />
                   )}
-                </div>
+                </HStack>)}
               </Td>
             </Tr>
           ))}

@@ -38,3 +38,8 @@ a:hover {
   object-fit: cover;
   border-radius: 50%;
 }
+
+/* For empty cells */
+td:empty::after{
+  content: "\00a0";
+}
