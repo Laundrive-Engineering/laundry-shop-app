@@ -11,7 +11,7 @@ const List: React.FC = () => {
     'Email',
     'Owner',
     'Password',
-    'Action',
+    'Action'
   ];
   const tableData: ShopData[] = [
     {
@@ -20,7 +20,7 @@ const List: React.FC = () => {
       phone: '+639177154388',
       email: 'johndoe@example.com',
       owner: 'John Doe',
-      password: 'password12345',
+      password: 'password12345'
     },
     {
       id: 2,
@@ -28,14 +28,18 @@ const List: React.FC = () => {
       phone: '+639177154388',
       email: 'johndoe@example.com',
       owner: 'Johnny Appleseed',
-      password: 'password09887',
-    },
+      password: 'password09887'
+    }
   ];
 
   return (
     <div>
       <AddShop />
-      <DataTable headers={tableHeaders} values={tableData} />
+      <DataTable headers={tableHeaders}
+                 values={tableData}
+                 onEditRowHandler={(data) => {
+
+                 }} />
     </div>
   );
 };

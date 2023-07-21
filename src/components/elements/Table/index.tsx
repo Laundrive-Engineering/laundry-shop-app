@@ -1,33 +1,36 @@
 import React from 'react';
 import {
+  IconButton,
   Table,
   TableContainer,
   Tbody,
   Td,
   Th,
   Thead,
-  Tr,
+  Tr
 } from '@chakra-ui/react';
+
 import { FaEdit, FaTrash } from 'react-icons/fa';
 
 import { BaseTableData } from '@/components/modules/interface';
+import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
 
 type DataTableProps = {
   headers: string[],
   values: BaseTableData[],
-  onEditRow?: (rowData: BaseTableData) => JSX.Element,
-  onDeleteRow?: (rowData: BaseTableData) => JSX.Element,
+  onEditRowHandler?: (rowData: BaseTableData) => void,
+  onDeleteRowHandler?: (rowData: BaseTableData) => void,
 };
 
 const DataTable: React.FC<DataTableProps> = ({
   headers,
   values,
-  onEditRow,
-  onDeleteRow,
+  onEditRowHandler,
+  onDeleteRowHandler,
 }) => {
   return (
     <TableContainer bg="white" borderRadius={5} padding={5} overflowX="auto">
-      <Table variant="simple" colorScheme="white">
+      <Table variant="striped" colorScheme="blue" size={"lg"} layout={"string"}>
         <Thead>
           <Tr>
             {headers.map((header, index) => (
@@ -43,16 +46,13 @@ const DataTable: React.FC<DataTableProps> = ({
               })}
               <Td display="flex" justifyContent="space-between">
                 <div>
-                  {onEditRow && (
-                    <button onClick={() => onEditRow(rowData)}>
-                      <FaEdit />
-                    </button>
+                  &nbsp;
+                  {onEditRowHandler && (
+                    <IconButton aria-label='Edit row' icon={<EditIcon />} />
                   )}
-                  {onEditRow && onDeleteRow && <p>|</p>}
-                  {onDeleteRow && (
-                    <button onClick={() => onDeleteRow(rowData)}>
-                      <FaTrash />
-                    </button>
+                  {onEditRowHandler && onDeleteRowHandler && <p>|</p>}
+                  {onDeleteRowHandler && (
+                    <IconButton aria-label='Delete row' icon={<DeleteIcon />} />
                   )}
                 </div>
               </Td>
