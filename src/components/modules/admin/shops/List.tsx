@@ -22,6 +22,13 @@ const List: React.FC = () => {
             email: 'johndoe@example.com',
             owner: 'John Doe',
             password: 'password12345',
+        },{
+            id: 2,
+            shopName: 'U-Wash Laundry',
+            phone: '+639177154388',
+            email: 'johndoe@example.com',
+            owner: 'Johnny Appleseed',
+            password: 'password09887',
         },
     ];
 
@@ -30,17 +37,7 @@ const List: React.FC = () => {
             <AddShop/>
             <DataTable
                 headers={tableHeaders}
-                values={tableData}
-                onSetupDataRow={(shopData) => {
-                    let fields: JSX.Element[] = [];
-                    Object.entries(shopData as ShopData).map(([key, value], index) => {
-                        if (key !== 'id') {
-                            fields.push(<Td key={index}>{value}</Td>)
-                        }
-                    })
-                    return fields
-                }}
-            />
+                values={tableData}/>
         </div>
     );
 };

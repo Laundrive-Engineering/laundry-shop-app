@@ -38,3 +38,7 @@ a:hover {
   object-fit: cover;
   border-radius: 50%;
 }
+
+td {
+  min-height: 70px;
+}

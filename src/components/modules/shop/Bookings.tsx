@@ -28,16 +28,7 @@ const Bookings: React.FC = () => {
     return (
         <div>
             <DataTable headers={tableHeaders}
-                       values={tableData}
-                       onSetupDataRow={(bookingData) => {
-                           let fields: JSX.Element[] = [];
-                           Object.entries(bookingData as BookingData).map(([key, value], index) => {
-                               if (key !== 'id') {
-                                   fields.push(<Td key={index}>{value}</Td>)
-                               }
-                           })
-                           return fields
-                       }}/>
+                       values={tableData}/>
         </div>
     );
 };

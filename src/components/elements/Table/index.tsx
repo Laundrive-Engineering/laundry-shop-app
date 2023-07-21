@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/react';
 import {FaEdit, FaTrash} from 'react-icons/fa';
 
-import {BaseData, ShopData} from '@/components/modules/interface';
+import {BaseData, BookingData, ShopData} from '@/components/modules/interface';
 import Any = jasmine.Any;
 import {JSXElement} from "@babel/types";
 
@@ -26,7 +26,6 @@ type Props = {
 type DataTableProps = {
     headers: string[];
     values: BaseData[];
-    onSetupDataRow: (value: BaseData) => JSX.Element[];
     onEditRow?: (rowData: BaseData) => JSX.Element;
     onDeleteRow?: (rowData: BaseData) => JSX.Element;
 }
@@ -34,7 +33,6 @@ type DataTableProps = {
 const DataTable: React.FC<DataTableProps> = ({
                                                  headers,
                                                  values,
-                                                 onSetupDataRow,
                                                  onEditRow,
                                                  onDeleteRow
                                              }) => {
@@ -47,33 +45,32 @@ const DataTable: React.FC<DataTableProps> = ({
                     </Tr>
                 </Thead>
                 <Tbody>
-                    {values.map((rowData) => (
-                        <Tr key={rowData.id}>
-                            {onSetupDataRow(rowData)}
-                            <Td display="flex" justifyContent="space-between">
-                                <div>
-                                    &nbsp;
-                                    {onEditRow && (
-                                        <button onClick={() => onEditRow(rowData)}>
-                                            <FaEdit/>
-                                        </button>
-                                    )}
-                                    {onEditRow && onDeleteRow && (<p>|</p>)}
-                                    {onDeleteRow && (
-                                        <button onClick={() => onDeleteRow(rowData)}>
-                                            <FaTrash/>
-                                        </button>
-                                    )}
-                                </div>
-                            </Td>
-                        </Tr>
-                    ))}
+                    {values.map((rowData) => <Tr key={rowData.id}>
+                        {
+                            Object.entries(rowData).map(([key, value], index) => {
+                                return key !== 'id' ? <Td key={index}>{value}</Td> : null
+                            })
+                        }
+                        <Td display="flex" justifyContent="space-between">
+                            <div>
+                                {onEditRow && <button onClick={() => onEditRow(rowData)}>
+                                    <FaEdit/>
+                                </button>}
+                                {onEditRow && onDeleteRow && <p>|</p>}
+                                {onDeleteRow && <button onClick={() => onDeleteRow(rowData)}>
+                                    <FaTrash/>
+                                </button>}
+                            </div>
+                        </Td>
+                    </Tr>)}
                 </Tbody>
             </Table>
         </TableContainer>
     );
 };
 
+
+// Deprecated
 const CustomTable: React.FC<Props> = ({
                                           headers,
                                           data,
