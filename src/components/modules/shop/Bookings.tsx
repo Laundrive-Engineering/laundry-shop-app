@@ -2,6 +2,7 @@ import DataTable from '@/components/elements/Table';
 import { BookingData } from '@/components/modules/interface';
 import React from 'react';
 import * as Crypto from 'crypto';
+import { Badge } from '@chakra-ui/react';
 
 const Bookings: React.FC = () => {
   const tableHeaders: string[] = [
@@ -25,7 +26,17 @@ const Bookings: React.FC = () => {
 
   return (
     <div>
-      <DataTable headers={tableHeaders} values={tableData} />
+      <DataTable
+        headers={tableHeaders}
+        values={tableData}
+        onFieldHandler={(fieldValue, index) =>
+          index == 5 ? (
+            <Badge colorScheme="green">{fieldValue}</Badge>
+          ) : (
+            <span>{fieldValue}</span>
+          )
+        }
+      />
     </div>
   );
 };

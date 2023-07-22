@@ -1,5 +1,15 @@
 import React from 'react';
-import { HStack, IconButton, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
+import {
+  HStack,
+  IconButton,
+  Table,
+  TableContainer,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
+} from '@chakra-ui/react';
 
 import { BaseTableData } from '@/components/modules/interface';
 import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
@@ -9,6 +19,7 @@ type DataTableProps = {
   values: BaseTableData[],
   onEditRowHandler?: (rowData: BaseTableData) => void,
   onDeleteRowHandler?: (rowData: BaseTableData) => void,
+  onFieldHandler?: (value: string, index: number) => JSX.Element,
 };
 
 const DataTable: React.FC<DataTableProps> = ({
@@ -16,6 +27,7 @@ const DataTable: React.FC<DataTableProps> = ({
   values,
   onEditRowHandler,
   onDeleteRowHandler,
+  onFieldHandler,
 }) => {
   return (
     <TableContainer bg="white" borderRadius={5} padding={5} overflowX="auto">
@@ -31,7 +43,15 @@ const DataTable: React.FC<DataTableProps> = ({
           {values.map((rowData) => (
             <Tr key={rowData.id}>
               {Object.entries(rowData).map(([key, value], index) => {
-                return key !== 'id' ? <Td key={index}>{value}</Td> : null;
+                return key !== 'id' ? (
+                  <Td key={index}>
+                    {onFieldHandler ? (
+                      onFieldHandler(value, index)
+                    ) : (
+                      <span>{value}</span>
+                    )}
+                  </Td>
+                ) : null;
               })}
               <Td display="flex" justifyContent="space-between">
                 {(onEditRowHandler || onDeleteRowHandler) && (
