@@ -1,35 +1,37 @@
 import React from 'react';
 import {
+  HStack,
+  IconButton,
   Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
   TableContainer,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
 } from '@chakra-ui/react';
-import { FaEdit, FaTrash } from 'react-icons/fa';
 
-import { ShopData } from '@/components/modules/interface';
+import { BaseTableData } from '@/components/modules/interface';
+import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
 
-type Props = {
+type DataTableProps = {
   headers: string[],
-  data: ShopData[],
-  // eslint-disable-next-line no-unused-vars
-  handleEdit?: (data: ShopData) => void,
-  // eslint-disable-next-line no-unused-vars
-  handleDelete?: (data: ShopData) => void,
+  values: BaseTableData[],
+  onEditRowHandler?: (rowData: BaseTableData) => void,
+  onDeleteRowHandler?: (rowData: BaseTableData) => void,
+  onFieldHandler?: (value: string, index: number) => JSX.Element,
 };
 
-const CustomTable: React.FC<Props> = ({
+const DataTable: React.FC<DataTableProps> = ({
   headers,
-  data,
-  handleEdit,
-  handleDelete,
+  values,
+  onEditRowHandler,
+  onDeleteRowHandler,
+  onFieldHandler,
 }) => {
   return (
     <TableContainer bg="white" borderRadius={5} padding={5} overflowX="auto">
-      <Table variant="simple" colorScheme="white">
+      <Table variant="simple" colorScheme="blue" size={'lg'} layout={'string'}>
         <Thead>
           <Tr>
             {headers.map((header, index) => (
@@ -38,26 +40,32 @@ const CustomTable: React.FC<Props> = ({
           </Tr>
         </Thead>
         <Tbody>
-          {data.map((row) => (
-            <Tr key={row.id}>
-              {Object.entries(row).map(([key, value], index) => {
-                if (key !== 'id') {
-                  return <Td key={index}>{value}</Td>;
-                }
-                return null;
+          {values.map((rowData) => (
+            <Tr key={rowData.id}>
+              {Object.entries(rowData).map(([key, value], index) => {
+                return key !== 'id' ? (
+                  <Td key={index}>
+                    {onFieldHandler ? (
+                      onFieldHandler(value, index)
+                    ) : (
+                      <span>{value}</span>
+                    )}
+                  </Td>
+                ) : null;
               })}
-
               <Td display="flex" justifyContent="space-between">
-                {handleEdit && (
-                  <button onClick={() => handleEdit(row)}>
-                    <FaEdit />
-                  </button>
-                )}
-                |
-                {handleDelete && (
-                  <button onClick={() => handleDelete(row)}>
-                    <FaTrash />
-                  </button>
+                {(onEditRowHandler || onDeleteRowHandler) && (
+                  <HStack>
+                    {onEditRowHandler && (
+                      <IconButton aria-label="Edit row" icon={<EditIcon />} />
+                    )}
+                    {onDeleteRowHandler && (
+                      <IconButton
+                        aria-label="Delete row"
+                        icon={<DeleteIcon />}
+                      />
+                    )}
+                  </HStack>
                 )}
               </Td>
             </Tr>
@@ -68,4 +76,4 @@ const CustomTable: React.FC<Props> = ({
   );
 };
 
-export default CustomTable;
+export default DataTable;

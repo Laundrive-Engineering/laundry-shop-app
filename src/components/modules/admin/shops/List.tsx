@@ -1,7 +1,8 @@
-import CustomTable from '@/components/elements/Table';
+import DataTable from '@/components/elements/Table';
 import { ShopData } from '../../interface';
 
 import AddShop from './partials/Add';
+import React from 'react';
 
 const List: React.FC = () => {
   const tableHeaders: string[] = [
@@ -21,20 +22,24 @@ const List: React.FC = () => {
       owner: 'John Doe',
       password: 'password12345',
     },
+    {
+      id: 2,
+      shopName: 'U-Wash Laundry',
+      phone: '+639177154388',
+      email: 'johndoe@example.com',
+      owner: 'Johnny Appleseed',
+      password: 'password09887',
+    },
   ];
 
   return (
     <div>
       <AddShop />
-      <CustomTable
+      <DataTable
         headers={tableHeaders}
-        data={tableData}
-        handleEdit={(data) => {
-          console.log('data', data);
-        }}
-        handleDelete={(data) => {
-          console.log('data', data);
-        }}
+        values={tableData}
+        onEditRowHandler={(data) => {}}
+        onDeleteRowHandler={(data) => {}}
       />
     </div>
   );
