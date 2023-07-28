@@ -38,8 +38,6 @@ const List: React.FC = () => {
       <DataTable
         headers={tableHeaders}
         values={tableData}
-        onEditRowHandler={(data) => {}}
-        onDeleteRowHandler={(data) => {}}
       />
     </div>
   );
