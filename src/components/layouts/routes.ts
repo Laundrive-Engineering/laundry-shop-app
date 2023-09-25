@@ -1,7 +1,7 @@
 const routes = [
   { title: 'Shops', url: '/admin/shops' },
   { title: 'Booking', url: '#' },
-  { title: 'Orders', url: '#' },
+  { title: 'Orders', url: '/admin/orders' },
   { title: 'History', url: '#' },
 ];
 
