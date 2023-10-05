@@ -1,5 +1,8 @@
-export interface ShopData {
+export interface BaseTableData {
   id: number;
+}
+
+export interface ShopData extends BaseTableData {
   shopName: string;
   phone: string;
   email: string;
@@ -7,8 +10,7 @@ export interface ShopData {
   password: string;
 }
 
-export interface TableData {
-  id: number;
+export interface TableData extends BaseTableData {
   shop: string;
   orderNumber: number;
   pickupFrom: string;

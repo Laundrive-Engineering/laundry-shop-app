@@ -20,6 +20,7 @@ a {
 
 a:hover {
   text-decoration: none;
+  color: #ffffff;
 }
 
 .avatar-container {
@@ -36,4 +37,9 @@ a:hover {
   height: 250px;
   object-fit: cover;
   border-radius: 50%;
+}
+
+/* For empty cells */
+td:empty::after {
+  content: '\00a0';
 }

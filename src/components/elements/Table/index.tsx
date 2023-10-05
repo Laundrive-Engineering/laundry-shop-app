@@ -1,30 +1,33 @@
 import React from 'react';
 import {
+  HStack,
+  IconButton,
   Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
   TableContainer,
-  Flex,
   ButtonGroup,
-  Select,
+  Flex,
+  Tbody,
+  Td,
+  Th,
+  Thead,
   Spinner,
+  Select,
+  Tr,
 } from '@chakra-ui/react';
-import { FaArrowLeft, FaArrowRight, FaEdit, FaTrash } from 'react-icons/fa';
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+import { BaseTableData } from '@/components/modules/interface';
+import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
 
-import { ShopData, TableData } from '@/components/modules/interface';
 import CustomButton from '../Button';
 import CustomText from '../Text';
-type Props = {
+
+type DataTableProps = {
   headers: string[],
-  data: ShopData[] | TableData[],
+  values: BaseTableData[],
+  onEditRowHandler?: (rowData: BaseTableData) => void,
+  onDeleteRowHandler?: (rowData: BaseTableData) => void,
+  // onFieldHandler?: (value: string, index: number) => JSX.Element,
   isLoading: boolean,
-  // eslint-disable-next-line no-unused-vars
-  handleEdit?: (data: ShopData | TableData) => void,
-  // eslint-disable-next-line no-unused-vars
-  handleDelete?: (data: ShopData | TableData) => void,
   itemsPerPage: number,
   currentPage: number,
   total: number,
@@ -34,12 +37,13 @@ type Props = {
   handleItemsPerPage: (perPage: number) => void,
 };
 
-const CustomTable: React.FC<Props> = ({
+const DataTable: React.FC<DataTableProps> = ({
   headers,
-  data,
+  values,
+  onEditRowHandler,
+  onDeleteRowHandler,
+  // onFieldHandler,
   isLoading,
-  handleEdit,
-  handleDelete,
   itemsPerPage,
   currentPage,
   total,
@@ -55,7 +59,12 @@ const CustomTable: React.FC<Props> = ({
       {isLoading ? (
         <Spinner />
       ) : (
-        <Table variant="simple" colorScheme="white">
+        <Table
+          variant="simple"
+          colorScheme="blue"
+          size={'lg'}
+          layout={'string'}
+        >
           <Thead>
             <Tr>
               {headers.map((header, index) => (
@@ -64,9 +73,18 @@ const CustomTable: React.FC<Props> = ({
             </Tr>
           </Thead>
           <Tbody>
-            {data.map((row) => (
-              <Tr key={row.id}>
-                {Object.entries(row).map(([key, value], index) => {
+            {values.map((rowData) => (
+              <Tr key={rowData.id}>
+                {Object.entries(rowData).map(([key, value], index) => {
+                  // return key !== 'id' ? (
+                  //   <Td key={index}>
+                  //     {onFieldHandler ? (
+                  //       onFieldHandler(value, index)
+                  //     ) : (
+                  //       <span>{value}</span>
+                  //     )}
+                  //   </Td>
+                  // ) : null;
                   if (key === 'qty' || key === 'price') {
                     const qtyArray = Array.isArray(value) ? value : [value];
                     return (
@@ -82,25 +100,21 @@ const CustomTable: React.FC<Props> = ({
                     return <Td key={index}>{value}</Td>;
                   }
                 })}
-
-                {(handleEdit || handleDelete) && (
-                  <Td display="flex" justifyContent="space-between">
-                    {handleEdit && (
-                      <button onClick={() => handleEdit(row)}>
-                        <FaEdit />
-                      </button>
-                    )}
-
-                    {handleDelete && (
-                      <>
-                        |
-                        <button onClick={() => handleDelete(row)}>
-                          <FaTrash />
-                        </button>
-                      </>
-                    )}
-                  </Td>
-                )}
+                <Td display="flex" justifyContent="space-between">
+                  {(onEditRowHandler || onDeleteRowHandler) && (
+                    <HStack>
+                      {onEditRowHandler && (
+                        <IconButton aria-label="Edit row" icon={<EditIcon />} />
+                      )}
+                      {onDeleteRowHandler && (
+                        <IconButton
+                          aria-label="Delete row"
+                          icon={<DeleteIcon />}
+                        />
+                      )}
+                    </HStack>
+                  )}
+                </Td>
               </Tr>
             ))}
           </Tbody>
@@ -119,11 +133,13 @@ const CustomTable: React.FC<Props> = ({
             onClick={() => handleCurrentPage(currentPage - 1)}
             // eslint-disable-next-line react/jsx-no-undef
             leftIcon={<FaArrowLeft />}
+            backgroundColor="#addae9"
           />
           <CustomButton
             isDisabled={currentPage === totalPages}
             onClick={() => handleCurrentPage(currentPage + 1)}
             rightIcon={<FaArrowRight />}
+            backgroundColor="#addae9"
           />
         </ButtonGroup>
 
@@ -149,4 +165,4 @@ const CustomTable: React.FC<Props> = ({
   );
 };
 
-export default CustomTable;
+export default DataTable;

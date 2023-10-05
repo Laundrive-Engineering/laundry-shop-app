@@ -80,7 +80,7 @@ const List: React.FC = () => {
     <div style={{ width: '100%' }}>
       <CustomTable
         headers={tableHeaders}
-        data={serializeData}
+        values={serializeData}
         isLoading={loading}
         total={total}
         itemsPerPage={itemsPerPage}
