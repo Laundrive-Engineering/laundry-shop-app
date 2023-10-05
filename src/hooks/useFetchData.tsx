@@ -12,7 +12,7 @@ const options = {
   method: 'GET',
   headers: {
     accept: 'application/json',
-    Authorization: 'Bearer secret_RPeYiUw1Lw1HsHQVRFghF6hcA3W7SHWF',
+    Authorization: `Bearer ${process.env.NEXT_PUBLIC_ECWID_CLIENT}`,
   },
 };
 
