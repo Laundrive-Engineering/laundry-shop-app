@@ -1,5 +1,5 @@
 import DataTable from '@/components/elements/Table';
-import { BookingData } from '@/components/modules/interface';
+// import { BookingData } from '@/components/modules/interface';
 import React from 'react';
 import * as Crypto from 'crypto';
 import { Badge } from '@chakra-ui/react';
@@ -26,7 +26,7 @@ const Bookings: React.FC = () => {
 
   return (
     <div>
-      <DataTable
+      {/* <DataTable
         headers={tableHeaders}
         values={tableData}
         onFieldHandler={(fieldValue, index) =>
@@ -36,7 +36,8 @@ const Bookings: React.FC = () => {
             <span>{fieldValue}</span>
           )
         }
-      />
+      /> */}
+      SHOP PAGE
     </div>
   );
 };
