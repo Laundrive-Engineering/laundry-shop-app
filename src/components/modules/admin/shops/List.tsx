@@ -1,10 +1,25 @@
-import DataTable from '@/components/elements/Table';
+import CustomTable from '@/components/elements/Table';
 import { ShopData } from '../../interface';
 
 import AddShop from './partials/Add';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import useFetchApiData from '@/hooks/useFetchData';
 
 const List: React.FC = () => {
+  const [itemsPerPage, setItemsPerPage] = useState<number>(10);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  // const apiUrl = `https://app.ecwid.com/api/v3/83444553/orders?offset=${
+  //   (currentPage - 1) * itemsPerPage
+  // }&limit=${itemsPerPage}`;
+
+  // const { data, loading, error } = useFetchApiData(apiUrl);
+
+  // // Access the properties
+  // const { items, total } = data;
+
+  // useEffect(() => {
+  //   console.log('items-------', items);
+  // }, [items]);
   const tableHeaders: string[] = [
     'Shop Name',
     'Phone',
@@ -35,11 +50,21 @@ const List: React.FC = () => {
   return (
     <div>
       <AddShop />
-      <DataTable
+      <CustomTable
         headers={tableHeaders}
         values={tableData}
         onEditRowHandler={(data) => {}}
         onDeleteRowHandler={(data) => {}}
+        isLoading={false}
+        total={10}
+        itemsPerPage={itemsPerPage}
+        currentPage={currentPage}
+        handleCurrentPage={(currentPage) => {
+          setCurrentPage(currentPage);
+        }}
+        handleItemsPerPage={(perPage) => {
+          setItemsPerPage(perPage);
+        }}
       />
     </div>
   );
