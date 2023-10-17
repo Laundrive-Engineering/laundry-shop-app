@@ -12,12 +12,14 @@ import {
   DrawerBody,
 } from '@chakra-ui/react';
 import { HamburgerIcon } from '@chakra-ui/icons';
+import { signOut } from 'next-auth/react';
 
 import UserProfile from './UserProfile';
 import CustomLink from '../elements/Link';
 
 // routes
 import routes from './routes';
+import CustomButton from '../elements/Button';
 
 const Sidebar: React.FC = () => {
   const { isOpen, onToggle, onClose } = useDisclosure();
@@ -25,7 +27,7 @@ const Sidebar: React.FC = () => {
 
   const RenderLogoutLink = () => {
     return (
-      <CustomLink
+      <CustomButton
         letterSpacing="0.1rem"
         py={2}
         px={4}
@@ -34,10 +36,12 @@ const Sidebar: React.FC = () => {
         color="white"
         _hover={{ textDecoration: 'none' }}
         _focus={{ outline: 'none' }}
-        href="/"
+        _active={{ background: 'none', textDecoration: 'none' }}
+        background="none"
+        onClick={() => signOut()}
       >
         Logout
-      </CustomLink>
+      </CustomButton>
     );
   };
 

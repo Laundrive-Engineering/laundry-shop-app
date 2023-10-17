@@ -1,8 +1,10 @@
 import React from 'react';
+import { SessionProvider } from 'next-auth/react';
 import { ChakraProvider } from '@chakra-ui/react';
 import Layout from '@/components/layouts/Layout';
 import '../styles/global.css';
 import { AppProps } from 'next/app';
+import { AuthProvider } from '@/providers/AuthProvider';
 
 const MyApp: React.FC<AppProps> = ({ Component, pageProps, router }) => {
   const excludeLayoutPages = ['/login'];
@@ -20,7 +22,11 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps, router }) => {
 
   return (
     <React.Fragment>
-      <ChakraProvider>{renderContent()}</ChakraProvider>
+      <ChakraProvider>
+        <SessionProvider session={pageProps.session}>
+          <AuthProvider>{renderContent()}</AuthProvider>
+        </SessionProvider>
+      </ChakraProvider>
     </React.Fragment>
   );
 };

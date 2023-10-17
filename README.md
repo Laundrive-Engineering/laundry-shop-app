@@ -15,5 +15,8 @@ pnpm dev
 
 # run before pushing to repo
 npm run fix
+
+
+npx prisma studio
 ```
 
