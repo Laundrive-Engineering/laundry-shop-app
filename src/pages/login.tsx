@@ -29,7 +29,7 @@ const LoginPage: React.FC = () => {
     let res = await signIn('credentials', {
       email,
       password,
-      callbackUrl: `${process.env.NEXT_PUBLIC_NEXTAUTH_URL}`,
+      // callbackUrl: `${process.env.NEXT_PUBLIC_NEXTAUTH_URL}`,
       redirect: false,
     });
 
