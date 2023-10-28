@@ -1,10 +1,19 @@
-import { PrismaClient } from '@prisma/client';
-import { SHA256 as sha256 } from 'crypto-js';
 import { NextApiRequest, NextApiResponse } from 'next';
+import { SHA256 as sha256 } from 'crypto-js';
+import { Sequelize, DataTypes } from 'sequelize';
+// import User from '../../../db/models/user'; // Adjust the import path as needed
 
-const prisma = new PrismaClient();
+// const sequelize = new Sequelize({
+//   dialect: 'postgres', // or your database dialect
+//   username: 'postgres',
+//   password: 'password123',
+//   database: 'laundrivedev_db',
+//   host: '127.0.0.1',
+// });
+// const User = require('../../../db/models/user')(sequelize, DataTypes);
 
-// We hash the user entered password using crypto.js
+import db from '../../../db/models/index';
+
 export const hashPassword = (str: string) => {
   return sha256(str).toString();
 };
@@ -13,44 +22,47 @@ interface User {
   id: number;
   createdAt: Date;
   email: string;
-  name: string | null;
+  username: string | null;
   password: string | null;
-  role: 'USER' | 'ADMIN';
+  roleId: string;
 }
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<User | { message: string }>
 ) {
-  if (req.method === 'POST') {
-    console.log('req.body-----', req.body);
-    try {
-      // Assuming you have a User model in Prisma
-      const { email, password } = req.body;
+  try {
+    // Query to retrieve all users from the "users" table
+    // const User = db.user;
+    // const users: any = await User.findOne({ where: { id: '1' } });
+    // res.status(200).json(users);
 
-      // Check if the user exists in the database
-      const existingUser = await prisma.user.findUnique({
-        where: { email },
-      });
+    // Assuming you have a User model in Prisma
+    const { email, password } = req.body;
 
-      if (!existingUser) {
-        return res.status(401).json({ message: 'User not found' });
-      }
+    // Check if the user exists in the database
+    const existingUser = (await db.user.findOne({
+      where: { email },
+      raw: true,
+      // eslint-disable-next-line prettier/prettier
+    })) as User | null;
 
-      // Verify the password (you should use a secure password hashing library) P@ssword12345
-      if (existingUser.password !== hashPassword(password)) {
-        return res.status(401).json({ message: 'Invalid password' });
-      }
+    console.log('existingUser---', existingUser);
 
-      // Authentication successful
-      return res.status(200).json(exclude(existingUser, ['password']));
-    } catch (error) {
-      console.error('Login error:', error);
-      return res.status(500).json({ message: 'Internal server error' });
+    if (!existingUser) {
+      return res.status(401).json({ message: 'User not found' });
     }
-  } else {
-    // Only accept POST requests
-    return res.status(405).json({ message: 'Method not allowed' });
+
+    // Verify the password (you should use a secure password hashing library) P@ssword12345
+    if (existingUser.password !== hashPassword(password)) {
+      return res.status(401).json({ message: 'Invalid password' });
+    }
+
+    // Authentication successful
+    return res.status(200).json(exclude(existingUser, ['password']));
+  } catch (error) {
+    console.error('Database error:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
   }
 }
 
