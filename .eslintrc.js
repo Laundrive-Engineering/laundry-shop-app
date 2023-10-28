@@ -1,24 +1,32 @@
 const config = {
   extends: ['next/core-web-vitals', 'plugin:prettier/recommended', 'prettier'],
-  parser: '@typescript-eslint/parser',
-  parserOptions: {
-    project: './tsconfig.json',
-  },
-  rules: {
-    // Prettier rule
-    'prettier/prettier': [
-      'error',
-      {
-        singleQuote: true,
-        parser: 'flow',
+  overrides: [
+    {
+      files: ['**/*.js'], // Target JavaScript files
+      parser: 'babel-eslint', // Use the Babel parser for JavaScript
+      rules: {
+        // You can add JavaScript-specific ESLint rules here
       },
-    ],
-    // Other ESLint rules
-    'no-multi-str': 'error',
-    'default-case': 'error',
-    'no-unused-vars': 'warn',
-    // ... continue with the other rules
-  },
+    },
+    {
+      files: ['**/*.ts', '**/*.tsx'], // Target TypeScript files
+      parser: '@typescript-eslint/parser', // Use the TypeScript parser for TypeScript
+      parserOptions: {
+        project: './tsconfig.json',
+      },
+      rules: {
+        // Prettier and TypeScript-specific rules here
+        'prettier/prettier': [
+          'error',
+          {
+            singleQuote: true,
+            parser: 'flow',
+          },
+        ],
+        // ... other TypeScript rules
+      },
+    },
+  ],
 };
 
 module.exports = config;
